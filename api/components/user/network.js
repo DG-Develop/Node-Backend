@@ -1,5 +1,6 @@
 const express = require('express')
 
+const secure = require('./secure')
 const response = require('../../../network/response')
 const controller = require('./index')
 
@@ -8,7 +9,7 @@ const router = express.Router()
 router.get('/', list)
 router.get('/:id', get)
 router.post('/', upsert)
-router.put('/', upsert)
+router.put('/', secure('update'),upsert)
 router.delete('/:id', remove)
 
 // Internal functions
@@ -33,7 +34,7 @@ async function get(req, res){
 
 async function upsert (req, res) {
     try {
-        const user = await controller.upsert(req.params.id)
+        const user = await controller.upsert(req.body)
         response.success(req, res, user, 201)
     } catch (error) {
         response.error(req, res, error.message, 500)
