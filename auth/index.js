@@ -26,11 +26,11 @@ const check = {
 function getToken(auth){
     // Bearer askjflasjdfslk
     if(!auth){
-        throw new Error('No viene token')
+        throw error('No viene token', 401)
     }
 
     if(auth.indexOf('Bearer ') === -1){
-        throw new Error('Formato invalido')
+        throw error('Formato invalido', 401)
     }
 
     const token = auth.replace('Bearer ', '')
