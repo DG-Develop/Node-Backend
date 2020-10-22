@@ -52,7 +52,7 @@ function get(table, id) {
         conection.query(`SELECT * FROM ${table} WHERE id=${id}`,
             (err, data) => {
                 if (err) return reject(err)
-                resolve(data)
+                resolve(data[0])
             }
         )
     })
@@ -80,10 +80,14 @@ function update(table, data) {
     })
 }
 
-function upsert(table, data) {
-    if (data && data.id) {
+async function upsert(table, data) {
+    const row = await get(table, data.id)
+    
+    if (row.length !== 0) {
+        
         return update(table, data)
     } else {
+        
         return insert(table, data)
     }
 }
