@@ -10,5 +10,9 @@ module.exports = {
         user: process.env.MYSQL_USER || 'root',
         password: process.env.MYSQL_PASS || 'masterUbuntu@345',
         database: process.env.MYSQL_DB || 'nodedb',
+    },
+    mysqlService:{
+        port: process.env.MYSQL_SRV_PORT || 3002,
+        host: process.env.MYSQL_SRV_HOST || 'localhost',
     }
 }
