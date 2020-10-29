@@ -24,7 +24,7 @@ module.exports = function(injectedStore){
             })
     }
 
-    async function upsert(data){
+    async function upsert(data, isHaveKey){
         const authData = {
             id: data.id,
         }
@@ -37,7 +37,7 @@ module.exports = function(injectedStore){
             authData.password = await bcrypt.hash(data.password, 5)
         }
 
-        return store.upsert(TABlA, authData)
+        return store.upsert(TABlA, authData, isHaveKey)
     }
 
     return {

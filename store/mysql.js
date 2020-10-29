@@ -1,5 +1,4 @@
 const mysql = require('mysql')
-const user = require('../api/components/user')
 const config = require('../config')
 
 const dbconf = {
@@ -80,18 +79,6 @@ function update(table, data) {
     })
 }
 
-async function upsert(table, data) {
-    const row = await get(table, data.id)
-    
-    if (row.length !== 0) {
-        
-        return update(table, data)
-    } else {
-        
-        return insert(table, data)
-    }
-}
-
 function query(table, query, join) {
     let joinQuery = ''
     if (join) {
@@ -114,6 +101,7 @@ function query(table, query, join) {
 module.exports = {
     list,
     get,
-    upsert,
-    query
+    update,
+    query,
+    insert
 }

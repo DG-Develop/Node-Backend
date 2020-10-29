@@ -21,6 +21,7 @@ module.exports = function(injectedStore){
     }
 
     async function upsert(body){
+        let keyGenerate = ''
         const user = {
             name: body.name,
             username: body.username
@@ -30,6 +31,7 @@ module.exports = function(injectedStore){
             user.id = body.id
         }else {
             user.id = nanoid()
+            keyGenerate = 'active'
         }
 
         if(body.password || body.username){
@@ -37,10 +39,10 @@ module.exports = function(injectedStore){
                 id: user.id,
                 username: user.username,
                 password: body.password
-            })
+            }, keyGenerate)
         }
 
-        return store.upsert(TABLA, user)
+        return store.upsert(TABLA, user, keyGenerate)
     }
 
     function remove(id){
